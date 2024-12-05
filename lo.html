@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Labour Finder</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;
+        }
+        nav ul li {
+            margin: 0 10px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .hero {
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .search-bar-container {
+            position: relative;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            max-height: 150px;
+            overflow-y: auto;
+            display: none;
+            z-index: 10;
+        }
+        .suggestions li {
+            list-style: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .suggestions li:hover {
+            background-color: #f0f0f0;
+        }
+        .services {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .service-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .card {
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+        }
+        .card img {
+            max-width: 100%;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        footer {
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="login.html">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find Skilled Workers Effortlessly</h1>
+            <p>Browse, Search, and Hire the Best Professionals Near You</p>
+            <div class="search-bar-container">
+                <input type="text" id="location-input" placeholder="Search by Skill or Location" class="search-bar">
+                <ul class="suggestions" id="suggestion-list"></ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <h2>Our Skilled Workers</h2>
+        <div class="service-cards">
+            <div class="card">
+                <img src="https://cdn.vectorstock.com/i/1000v/23/58/plumber-cartoon-colored-clipart-vector-46812358.jpg" alt="Plumber">
+                <h3>Plumber</h3>
+                <p>Experienced plumbers available for all your plumbing needs.</p>
+            </div>
+            <div class="card">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZxjMT8M1l-eU4elOIPsGOwornezQW1zVriw&s" alt="Electrician">
+                <h3>Electrician</h3>
+                <p>Reliable electricians ready to help with electrical installations.</p>
+            </div>
+            <div class="card">
+                <img src="https://www.shutterstock.com/image-vector/classic-worker-carpenter-vector-civil-600nw-2485309197.jpg" alt="Carpenter">
+                <h3>Carpenter</h3>
+                <p>Professional carpenters for all types of woodworking services.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Labour Finder. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const locations = [
+            "New York, USA",
+            "Los Angeles, USA",
+            "London, UK",
+            "Paris, France",
+            "Tokyo, Japan",
+            "Berlin, Germany",
+            "Sydney, Australia",
+            "Bharatpur, Nepal"
+        ];
+
+        const input = document.getElementById("location-input");
+        const suggestionList = document.getElementById("suggestion-list");
+
+        input.addEventListener("input", () => {
+            const query = input.value.toLowerCase();
+            suggestionList.innerHTML = ""; // Clear previous suggestions
+            if (query) {
+                const filteredLocations = locations.filter(location => 
+                    location.toLowerCase().includes(query)
+                );
+                if (filteredLocations.length > 0) {
+                    filteredLocations.forEach(location => {
+                        const li = document.createElement("li");
+                        li.textContent = location;
+                        li.addEventListener("click", () => {
+                            input.value = location;
+                            suggestionList.style.display = "none";
+                        });
+                        suggestionList.appendChild(li);
+                    });
+                    suggestionList.style.display = "block";
+                } else {
+                    suggestionList.style.display = "none";
+                }
+            } else {
+                suggestionList.style.display = "none";
+            }
+        });
+
+        document.addEventListener("click", (e) => {
+            if (!document.querySelector(".search-bar-container").contains(e.target)) {
+                suggestionList.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
